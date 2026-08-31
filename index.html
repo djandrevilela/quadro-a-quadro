@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quadro a Quadro — o teu clube de BD</title>
+<meta name="description" content="Lista das séries de BD partilhadas, com progresso de leitura guardado localmente.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A5%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Mono:wght@400;700&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Halftone backdrop, decorativo -->
+<div class="halftone-backdrop" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-burst" aria-hidden="true">★</span>
+      <div class="brand-text">
+        <h1>QUADRO A QUADRO</h1>
+        <p class="brand-sub">O teu clube de leitura de BD</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="app-main">
+
+  <!-- ============ ECRÃ: LISTA DE SÉRIES ============ -->
+  <section id="homeScreen">
+
+    <section class="control-bar">
+      <h2 class="screen-title">Séries</h2>
+      <div class="progress-stamp" id="homeStamp" aria-live="polite">
+        <span class="stamp-count" id="homeStampCount">0/0</span>
+        <span class="stamp-label">LIDOS</span>
+      </div>
+    </section>
+
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="homeProgressFill"></div>
+    </div>
+
+    <div class="data-tools">
+      <button type="button" class="data-tools-btn" id="exportBtn">⬇️ Exportar dados</button>
+      <button type="button" class="data-tools-btn" id="importBtn">⬆️ Importar dados</button>
+      <input type="file" id="importFile" accept="application/json" hidden>
+    </div>
+
+    <div id="seriesList" class="series-list"></div>
+
+    <p class="empty-state" id="homeEmptyState" hidden>
+      Ainda não há séries por aqui. Vai aparecendo à medida que forem partilhadas no Telegram — volta em breve! 📚
+    </p>
+
+  </section>
+
+  <!-- ============ ECRÃ: DETALHE DE UMA SÉRIE ============ -->
+  <section id="seriesScreen" hidden>
+
+    <button type="button" class="back-btn" id="backBtn">← Séries</button>
+
+    <div class="series-header" id="seriesHeaderCard">
+      <h2 class="screen-title" id="seriesTitle">—</h2>
+    </div>
+
+    <section class="control-bar">
+      <div class="segmented" id="viewSegmented" role="tablist" aria-label="Vista">
+        <button class="segment is-active" data-view="proximos" role="tab" aria-selected="true">Próximos</button>
+        <button class="segment" data-view="historico" role="tab" aria-selected="false">Lidos</button>
+        <button class="segment" data-view="todos" role="tab" aria-selected="false">Todos</button>
+      </div>
+      <div class="progress-stamp" id="progressStamp" aria-live="polite">
+        <span class="stamp-count" id="progressCount">0/0</span>
+        <span class="stamp-label">LIDOS</span>
+      </div>
+    </section>
+
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <section id="nextUpZone" class="next-up" hidden>
+      <p class="next-up-eyebrow">A seguir na pilha</p>
+      <div class="next-up-card" id="nextUpCard"></div>
+    </section>
+
+    <section id="chapterList" class="chapter-list" aria-live="polite"></section>
+
+    <p class="empty-state" id="emptyState" hidden></p>
+
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  <p>Progresso guardado só neste dispositivo/navegador — cada pessoa vê e marca o seu próprio progresso.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
