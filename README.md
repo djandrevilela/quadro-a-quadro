@@ -1,102 +1,142 @@
-# Quadro a Quadro
+<div align="center">
 
-Lista das séries de BD partilhadas no Telegram, com os capítulos de cada uma e
-onde ler (volume/omnibus, quando aplicável). Cada pessoa marca o seu próprio
-progresso — guardado só no browser dela (`localStorage`), sem contas nem
-sincronização entre dispositivos.
+# 💥 Quadro a Quadro
 
-## Estrutura
+**O teu clube de leitura de BD, quadro a quadro.**
 
-- `index.html` — estrutura da página (duas "vistas": lista de séries e
-  detalhe de uma série).
-- `styles.css` — estilo visual (tema "banda desenhada", mesma linguagem
-  gráfica do site original).
-- `data.js` — **o único ficheiro que precisas de editar** para adicionar
-  séries e capítulos. Vê os comentários lá dentro para o formato exato.
-- `app.js` — lógica da app (não precisas de mexer aqui).
+Lista das séries partilhadas no Telegram, com os capítulos de cada uma, onde ler
+(volume/omnibus) e o teu progresso guardado só neste browser — sem contas, sem
+sincronização, sem complicações.
 
-## Como adicionar uma nova série
+</div>
 
-Abre `data.js` e acrescenta um objeto ao array `SERIES`, por exemplo:
+---
+
+## ✨ Funcionalidades
+
+- 📚 **Lista de séries** com progresso visual de cada uma
+- 🔖 **Capítulos por série**, com indicação de onde ler (volume/omnibus) quando aplicável
+- 🏷️ **Tag "opcional"** para leituras dispensáveis (tie-ins, especiais, etc.)
+- ✅ **Marcar como lido**, guardado localmente — cada pessoa tem o seu próprio progresso
+- 🔝 **Ordenação inteligente** — séries novas e séries com leitura recente sobem ao topo
+- ⬇️⬆️ **Importar/exportar progresso** em `.json`, para backup ou mudares de dispositivo
+- 🚀 Zero dependências, zero build — HTML, CSS e JS puros, prontos para o **GitHub Pages**
+
+---
+
+## 📁 Estrutura
+
+```
+quadro-a-quadro/
+├── index.html    # estrutura da página (lista de séries + detalhe de série)
+├── styles.css    # estilo visual — tema "banda desenhada"
+├── data.js       # 📌 o ÚNICO ficheiro que precisas de editar (séries e capítulos)
+├── app.js        # lógica da app — não precisas de mexer aqui
+└── README.md     # este ficheiro
+```
+
+---
+
+## ➕ Como adicionar uma nova série
+
+Abre `data.js` e acrescenta um objeto ao array `SERIES`:
 
 ```js
 const SERIES = [
   {
-    id: "saga",
-    title: "Saga",
-    color: "#128C7E",       // opcional
+    id: "saga",                // único, sem espaços/acentos
+    title: "Saga",              // como aparece no ecrã
+    color: "#128C7E",           // opcional — cor do selo da série
     chapters: [
       { id: 1, title: "Saga #1", where: "Saga Deluxe Vol. 1" },
       { id: 2, title: "Saga #2", where: "Saga Deluxe Vol. 1" },
-      { id: 3, title: "Saga #3", where: "" }, // ainda sem volume definido
-      { id: 4, title: "Saga Special", where: "", optional: true }, // leitura dispensável
+      { id: 3, title: "Saga #3", where: "" },                          // ainda sem volume definido
+      { id: 4, title: "Saga Special", where: "", optional: true },     // leitura dispensável
     ],
   },
 ];
 ```
 
-- `id` da série tem de ser único (sem espaços/acentos).
-- `id` de cada capítulo só precisa de ser único **dentro** da própria série.
-- `where` é opcional — deixa `""` (ou omite o campo) se ainda não souberes em
-  que volume/omnibus vai sair; a app mostra "avulso" nesse caso.
-- `optional: true` marca o capítulo como leitura dispensável (tie-in,
-  especial, etc.) — aparece com uma tag "opcional" no cartão. Omite o campo
-  (ou usa `false`) para capítulos normais.
-- Para acrescentar capítulos a uma série já existente, basta adicionares
-  itens ao array `chapters` dela.
+### Campos de cada capítulo
 
-Depois de editares e gravares `data.js`, basta atualizares/publicares o site
-(ver secção seguinte) — não é preciso mexer em mais nada.
+| Campo      | Obrigatório | Descrição                                                                 |
+|------------|:-----------:|-----------------------------------------------------------------------------|
+| `id`       | ✅          | Único **dentro da série** (não precisa de ser único no site todo)          |
+| `title`    | ✅          | Nome/número do capítulo, ex: `"Amazing Spider-Man #1"`                     |
+| `where`    | ❌          | Volume/omnibus onde ler. Deixa `""` se ainda não estiver definido → aparece como "avulso" |
+| `optional` | ❌          | `true` para leituras dispensáveis (tie-ins, especiais). Aparece com tag "opcional" |
 
-## Publicar no GitHub Pages
+> 💡 Para acrescentar capítulos a uma série já existente, basta adicionares itens ao array `chapters` dela e fazer commit/push.
 
-1. Cria um repositório novo no GitHub (pode ser público ou privado, desde
-   que tenhas GitHub Pages disponível) e envia estes ficheiros para ele
+Não precisas de mexer em mais nada — depois de gravares `data.js`, é só publicar (ver secção seguinte).
+
+---
+
+## 🚀 Publicar no GitHub Pages
+
+1. Cria um repositório novo no GitHub e envia estes ficheiros para ele
    (`index.html`, `styles.css`, `data.js`, `app.js`).
-2. No repositório, vai a **Settings → Pages**.
+2. Vai a **Settings → Pages**.
 3. Em "Build and deployment", escolhe **Deploy from a branch**, seleciona o
-   branch (normalmente `main`) e a pasta `/ (root)`.
-4. Guarda. Ao fim de um ou dois minutos o site fica disponível em
-   `https://<o-teu-utilizador>.github.io/<nome-do-repo>/`.
+   branch (normalmente `main`) e a pasta **`/ (root)`**.
+4. Guarda. Ao fim de um ou dois minutos o site fica disponível em:
+
+   ```
+   https://<o-teu-utilizador>.github.io/<nome-do-repo>/
+   ```
 
 Sempre que quiseres adicionar séries novas, edita `data.js`, faz commit e
-push — o GitHub Pages atualiza-se sozinho.
+push — o GitHub Pages atualiza-se sozinho. 🎉
 
-## Ordenação das séries
+---
 
-Na lista de séries, a ordem não é fixa — reflete atividade recente:
+## 🔝 Ordenação das séries
 
-- Uma série acabada de aparecer em `data.js` (nunca vista antes neste
+A lista de séries não tem ordem fixa — reflete a atividade mais recente:
+
+- 🆕 Uma série acabada de aparecer em `data.js` (nunca vista antes neste
   dispositivo) vai automaticamente para o topo assim que a página carrega.
-- Assim que marcas um capítulo como lido, essa série sobe para o topo; a
-  lista fica ordenada pela série com a leitura mais recente primeiro.
-- Se desmarcares o capítulo mais recente, a série volta a ordenar-se pelo
+- 📖 Assim que marcas um capítulo como lido, essa série sobe para o topo —
+  a lista fica ordenada pela leitura mais recente primeiro.
+- ↩️ Se desmarcares o capítulo mais recente, a série reordena-se pelo
   capítulo lido mais recente que ainda estiver marcado (ou pela posição em
   que apareceu, se não houver nenhum).
 
-Isto é calculado a partir do progresso guardado em `localStorage`, não
-precisas de fazer nada em `data.js` para isto funcionar.
+Tudo calculado a partir do progresso em `localStorage` — não precisas de
+fazer nada em `data.js` para isto funcionar.
 
-## Importar / exportar progresso
+---
 
-Como o progresso fica só no `localStorage` de cada browser, há dois botões
-no topo da lista de séries para fazeres cópia de segurança ou levares o teu
-progresso para outro dispositivo/browser:
+## ⬇️⬆️ Importar / exportar progresso
 
-- **⬇️ Exportar dados** — descarrega um ficheiro `.json` com o teu progresso
-  atual (capítulos lidos e datas).
-- **⬆️ Importar dados** — escolhe um ficheiro exportado anteriormente e
-  **substitui** o progresso guardado neste dispositivo pelo do ficheiro
-  (pede confirmação antes de o fazer).
+Como o progresso vive só no `localStorage` de cada browser, há dois botões
+no topo da lista de séries:
 
-## Notas
+| Botão                  | O que faz                                                                 |
+|-------------------------|----------------------------------------------------------------------------|
+| **⬇️ Exportar dados**   | Descarrega um `.json` com o teu progresso atual (capítulos lidos e datas) |
+| **⬆️ Importar dados**   | Escolhe um `.json` exportado antes e **substitui** o progresso deste dispositivo (pede confirmação) |
 
-- O progresso de leitura é guardado no `localStorage` do browser de cada
-  pessoa. Se limpares os dados do site no browser (ou usares outro
-  browser/dispositivo), o progresso não aparece — usa a importação/
-  exportação acima para o levares contigo.
-- Não há contas nem passwords: qualquer pessoa que abra o site vê a mesma
+Usa isto para fazer backup ou para levares o teu progresso para outro
+browser/dispositivo.
+
+---
+
+## 📝 Notas
+
+- 🔒 O progresso é guardado só no `localStorage` do browser de cada pessoa —
+  se limpares os dados do site ou mudares de browser/dispositivo, usa a
+  importação/exportação acima para não perderes nada.
+- 👤 Não há contas nem passwords: qualquer pessoa que abra o site vê a mesma
   lista de séries e marca o seu próprio progresso local.
-- No ecrã de séries, o selo "LIDOS" no topo conta **séries completas**
+- 🏆 No ecrã de séries, o selo **"LIDOS"** no topo conta **séries completas**
   (todas com todos os capítulos marcados), não capítulos individuais. Dentro
   de cada série, o progresso mostrado é sim por capítulo.
+
+---
+
+<div align="center">
+
+Boas leituras! 📚✨
+
+</div>
